@@ -1,0 +1,5 @@
+#+OPTIONS: toc:nil num:nil ^:nil
+#+TITLE: Nix configuration files
+#+AUTHOR: Bence Fábián <begnoc@gmail.com>
+
+These are some configuration files I use across different machines.
