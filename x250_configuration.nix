@@ -117,7 +117,7 @@
         ffmpeg
         file
         # (wrapFirefox (firefox-unwrapped.override { pulseaudioSupport = false; }) { gdkWayland = true; })
-        (firefox.override { gdkWayland = true; })
+        firefox-wayland
         firejail
         ghostscript
         gimp
