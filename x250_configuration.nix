@@ -134,7 +134,7 @@
         maxima
         minikube
         moc
-        (mpv.override { jackaudioSupport = true; })
+        (wrapMpv (mpv-unwrapped.override { jackaudioSupport = true; }) {})
         mupdf
         ntfs3g
         p7zip
