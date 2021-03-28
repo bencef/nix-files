@@ -126,6 +126,7 @@
         go-mtpfs
         inotify-tools
         jack2Full
+        jq
         lutris
         obs-studio
         kvm
