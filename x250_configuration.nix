@@ -218,9 +218,10 @@
 
   security = {
     sudo.enable = true;
-    wrappers = with pkgs; {
-      go-mtpfs.source = "${go-mtpfs}/bin/go-mtpfs";
-    };
+    # TODO:  What's the new preferred way?
+    # wrappers = with pkgs; {
+    #   go-mtpfs.source = "${go-mtpfs}/bin/go-mtpfs";
+    # };
     # Needed for wine
     pam.loginLimits = [
       { domain = "bence";
