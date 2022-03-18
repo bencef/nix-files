@@ -80,6 +80,9 @@
     extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
   };
 
+  # enable screen sharing on wayland
+  xdg.portal.wlr.enable = true;
+
   hardware.cpu.intel.updateMicrocode = true;
 
   nixpkgs.config = {
