@@ -269,7 +269,7 @@
 
       });
     in [
-      v4l2loopback
+      config.boot.kernelPackages.v4l2loopback
     ];
   boot.extraModprobeConfig = "options v4l2loopback devices=1 exclusive_caps=1";
 
