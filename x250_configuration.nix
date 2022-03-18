@@ -129,6 +129,7 @@
         jq
         lutris
         obs-studio
+        pavucontrol
         kvm
         kubectl
         ledger
@@ -260,89 +261,17 @@
   # enable sound.
   sound.enable = true;
   # hardware.pulseaudio.enable = true;
-  boot.blacklistedKernelModules = [
-    "snd_hda_codec_hdmi"
-  ];
+  # boot.blacklistedKernelModules = [
+  #   "snd_hda_codec_hdmi"
+  # ];
 
-  sound.extraConfig =
-    ''
-        pcm.!default {
-            type plug
-            slave.pcm {
-              @func getenv
-              vars [ ALSAPCM ]
-              default "rawjack"
-            }
-        }
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    jack.enable = true;
+    pulse.enable = true;
+  };
 
-        ctl.!default {
-            type hw
-            card 1
-        }
-
-        pcm_type.jack {
-          lib "${pkgs.alsaPlugins}/lib/alsa-lib/libasound_module_pcm_jack.so"
-        }
-
-        # Routing ALSA to jack:
-        # <http://jackaudio.org/faq/routing_alsa.html>.
-        pcm.rawjack {
-          type jack
-          playback_ports {
-            0 system:playback_1
-            1 system:playback_2
-          }
-
-          capture_ports {
-            0 system:capture_1
-            1 system:capture_2
-          }
-        }
-
-        #asym fun start here. we define one pcm device called "dmixed"
-        pcm.dmixed {
-            ipc_key 1025
-            type dmix
-            slave {
-              pcm "hw:1,0"
-              period_time 0
-              period_size 1024
-              buffer_size 4096
-              rate 44100
-            }
-        }
-
-        #one called "dsnooped" for capturing
-        pcm.dsnooped {
-            ipc_key 1027
-            type dsnoop
-            slave.pcm "hw:1,0"
-        }
-
-        #and this is the real magic
-        pcm.asymed {
-            type asym
-            playback.pcm "dmixed"
-            capture.pcm "dsnooped"
-        }
-
-        #a ctl device to keep xmms happy
-        ctl.pasymed {
-            type hw
-            card 1
-        }
-
-        #for aoss:
-        pcm.dsp0 {
-            type plug
-            slave.pcm "asymed"
-        }
-
-        ctl.mixer0 {
-            type hw
-            card 1
-        }
-  '';
 
   # Enable the X11 windowing system.
   services.xserver = {
