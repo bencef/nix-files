@@ -11,6 +11,12 @@
       ./musnix
     ];
 
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+    }))
+  ];
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -58,6 +64,7 @@
     enableGhostscriptFonts = true;
     fonts = with pkgs; [
       source-code-pro
+      victor-mono
       corefonts
     ];
   };
@@ -108,7 +115,7 @@
         dotnet-sdk_3
         dzen2
         ed
-        (emacs.override {
+        (emacsGcc.override {
           inherit imagemagick;
           # withXwidgets = true;
         })
